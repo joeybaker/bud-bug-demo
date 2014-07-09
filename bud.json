@@ -1,0 +1,40 @@
+{
+  "daemon": false,
+  "workers": 1,
+  "restart_timeout": 250,
+  "log": {
+    "level": "debug",
+    "facility": "user",
+    "stdio": true,
+    "syslog": false
+  },
+  "availability": {
+    "death_timeout": 1000,
+    "revive_interval": 2500,
+    "retry_interval": 250,
+    "max_retries": 5
+  },
+  "frontend": {
+    "port": 1443,
+    "host": "0.0.0.0",
+    "keepalive": 3600,
+    "security": "tls12",
+    "server_preference": true,
+    "ssl3": false,
+    "max_send_fragment": 1400,
+    "allow_half_open": false,
+    "npn": ["http/1.1", "http/1.0"],
+    "cert": "keys/cert.pem",
+    "key": "keys/key.pem",
+    "reneg_window": 600,
+    "reneg_limit": 3
+  },
+  "balance": "roundrobin",
+  "backend": [{
+    "port": 8000,
+    "host": "127.0.0.1",
+    "keepalive": 3600,
+    "proxyline": false,
+    "x-forward": true
+  }]
+}
